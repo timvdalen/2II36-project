@@ -1,0 +1,59 @@
+\documentclass[a4paper,11pt,twocolumn]{article}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{natbib}
+
+\bibliographystyle{plain}
+
+\geometry{
+	includeheadfoot,
+	margin=2.54cm
+}
+
+\title{
+	A Voteless Network Based Movie Recommender System\\
+	\vspace{2 mm}
+	\Large{Final Report}
+}
+\author{
+	Tim van Dalen (0744839)
+	\and
+	Thom Hurks (0828691)
+	\and
+	Vincent de Vos (0741795)
+	\and
+	Bart van Wezel (0740608)
+}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+	\input{abstract}
+	
+	\section{Introduction}
+	\label{sec:intro}
+	\input{sections/intro}
+	
+	\section{Data sources}
+	\label{sec:data}
+	\input{sections/data}
+	
+	\section{Architecture}
+	\label{sec:arch}
+	\input{sections/arch}
+	
+	\section{Results}
+	\label{sec:results}
+	\input{sections/results}
+	
+	\section{Discussion}
+	\label{sec:discussion}
+	\input{sections/discussion}
+	
+	\bibliography{bibliography}
+\end{document} 
