@@ -1,5 +1,7 @@
 report.pdf
 
+report/sections/*/*.eps
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

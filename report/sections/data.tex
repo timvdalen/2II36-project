@@ -5,6 +5,19 @@ We have used the following data sources.
 
 \subsection{trakt.tv}
 \label{sec:data:trakt}
+Trakt is a web service that lets people track what TV shows and movies they have watched.
+It is known for its well-structured - though unfortunately not so highly available - API.
+
+Trakt gets data about movies and TV shows from TMDb, a site that scrapes IMDb and makes movie data easier available.
+Users of Trakt can leave reviews and comments (called shouts) on movies.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{sections/data/trakt}
+	\caption{Trakt data sources}
+\end{figure}
+
+We use the Trakt API to get all reviews and shouts for movies that we are interested in.
 
 \subsection{Reddit}
 \label{sec:data:reddit}

@@ -1,0 +1,10 @@
+digraph trakt{
+	rankdir=RL;
+	
+	trakt;
+	TMDb;
+	IMDb;
+	
+	TMDb -> trakt;
+	IMDb -> TMDb;
+}
