@@ -2,6 +2,36 @@ We have used the following data sources.
 
 \subsection{Metacritic}
 \label{sec:data:metacritic}
+Metacritic collects reviews from other websites for movies, books, computer games, albums and TV shows. 
+They combine the review grades from each reviews to derive a general grade for the movie.
+We are only interested in their data about movies, but of course they also do this for books, computer games, albums and TV shows.
+They also let registered users write reviews about the movie and combine their grades for a user grade for the movie. 
+Unfortunately there is no official Metacritic API. There however is an unofficial Metacritic API. 
+This API can be used to find grades and information about the movie.
+We are interested in the critic reviews and user reviews, but that information is not accessible through the API, thus we had to build our own web scrapper to collect the data of Metacritic. 
+Metacritic only displays the first part of each critic review on their own website. 
+The rest of the review is available on the website of the writer of the review. 
+There are a lot of different writers of critic reviews, thus it would be extremely complex to automatically scrap their websites correctly. 
+
+So we were going to focus on the user reviews. These are displayed on a different page for each movie. 
+We decided to scrap the first 100 helpful user reviews of each movie. 
+The next problem was to get the url of those movies. 
+Metacritic only has around 7000 movies, while the IMDB list contained 1.4 million movies. 
+So we just scrapped all the movies from Metacritic and searched for their IMDB ID’s after that. 
+
+Now we knew what data we had to collect we could build a scrapper.
+The scrapper works in two phases:
+\subsection{Collect all URL’s }
+Metacritic has a list of all movies by their first letter. This list contains the url’s to the page of the movies. 
+There are up to hundred movies per page, so we build a scrapper that downloads these pages. 
+The url’s were easily extracted from the downloaded pages, by selecting the main content of the pages and selecting all links to other pages. 
+Then we filter out the links that are not movies. These links do not have movies in the url and thus were easily filtered. 
+\subsection{Collect all User reviews}
+For each movie we downloaded the page that consisted the user-reviews, with up to hundred reviews sorted on most helpful. 
+We extracted the user reviews from these pages by look for the css classes with div.review body span. 
+There was a little problem when user reviews where to long. These user reviews were three times in the page. One short version, two long versions. 
+We only needed the last long version. So in each class with  div.review body span, 
+we checked if it ended with expand… and if this was true we skipped that class and the next and only used the last class. 
 
 \subsection{trakt.tv}
 \label{sec:data:trakt}
