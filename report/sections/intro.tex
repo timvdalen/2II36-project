@@ -1,0 +1,48 @@
+\subsection{Background}
+\label{sec:intro:background}
+Our premise is that user-vote based recommender systems such as those used by Netflix are not very successful in
+providing users with new and previously unknown content. For example:
+
+\subsection{Content-based recommenders}
+These systems recommend items to a person similar to previous items rated highly by
+that person will never recommend items outside of a person’s content profile.
+
+\subsection{Collaborative Filtering}
+These approaches where similar-voting users (nearest neighbors) are found in order to predict a
+user’s vote for an unseen item are also limited; it cannot recommend new items as no-one has voted on them yet.
+Besides that, voting based systems are inherently biased towards items that were highly rated by the mass of
+users, this results in recomendations for overall highly rated movies and not for a personal recomendation.
+
+\subsection{Vote-based recommending}
+This is limited because there will always be a gap between a users’s discovered content
+profile and their true content profile. For example in the case of movies:
+\begin{itemize}
+	\item Users will not vote on all movies that they watch.
+	\item A recommender system has no knowledge from a user’s history unless it specifically asks the user to rate
+movies the user has already seen. Otherwise the profile will only consist of movies that the user watched
+since the user started using the system.
+	\item A content provider cannot offer all possible content; therefore a recommender system working on that
+content is limited because various items that distinguish a user’s “taste” from other users might not be
+available and thus cannot be voted on. Content providers generally do not want to remind users that
+content exists which is not available on their system.
+\end{itemize}
+
+
+\subsection{Goals}
+\label{sec:intro:goals}
+A recommender system is only truly useful if it recommends items that are unknown to the user; therefore our
+objective is to develop a novel approach that results in a recommendation system that excels at recommending items
+that the user did not yet know; we will specifically focus on movies in this project.
+
+\subsection{Solution}
+\label{sec:intro:solution}
+Our solution to the problem is to use a social network based approach. If all movies are vertices in a graph, then we
+can create edges between those movies if they share actors, directors, writers, producers, involved companies or other
+connections. This edges will have a different weights based on the type of connection they have. We can obtain this
+data by mining various public internet sources. Just as a social network “seeds” your account by importing contacts,
+we can seed this movie network automatically or manually (by the user). Movies can be recommended by doing graph
+searches, calculating distance in number of nodes of known-nodes to unknown-nodes or even by doing random jumps
+in the graph. We can also mine movie review- and discussion websites to find movies that are often mentioned
+together and create direct edges between those movies. We can also let users do graph searches by themselves, similar
+to Facebook’s social graph search. And because we don’t take voting into account, we expect this approach to work
+better regarding the finding of new movies that a user may be interested in.
