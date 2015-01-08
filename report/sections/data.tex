@@ -21,12 +21,12 @@ So we just scrapped all the movies from Metacritic and searched for their IMDB I
 
 Now we knew what data we had to collect we could build a scrapper.
 The scrapper works in two phases:
-\subsection{Collect all URL’s }
+\subsubsection{Collect movie URL’s }
 Metacritic has a list of all movies by their first letter. This list contains the url’s to the page of the movies. 
 There are up to hundred movies per page, so we build a scrapper that downloads these pages. 
 The url’s were easily extracted from the downloaded pages, by selecting the main content of the pages and selecting all links to other pages. 
 Then we filter out the links that are not movies. These links do not have movies in the url and thus were easily filtered. 
-\subsection{Collect all User reviews}
+\subsubsection{Collect user reviews}
 For each movie we downloaded the page that consisted the user-reviews, with up to hundred reviews sorted on most helpful. 
 We extracted the user reviews from these pages by look for the css classes with div.review body span. 
 There was a little problem when user reviews where to long. These user reviews were three times in the page. One short version, two long versions. 
@@ -51,3 +51,32 @@ We use the Trakt API to get all reviews and shouts for movies that we are intere
 
 \subsection{Reddit}
 \label{sec:data:reddit}
+Reddit is a large online community and news website where registered users can submit content, such as text posts or direct website (perma)links. 
+Registered users can vote submissions \textbf{up} or \textbf{down} to organize the posts (and comments) and determine their position on the site's pages. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{sections/data/reddit}
+	\caption{Reddit data source}
+\end{figure}
+
+Reddit is divided into sections called \textbf{subreddits}. 
+Within these subreddits users can discuss various kinds of topics related to that subreddit.  
+
+\subsubsection{Find movie discussions}
+Reddit offers an advanced \textbf{API} that allows for searching. This includes searching for matches in the titles of a topics. By searching for movie titles in these topic titles we are able to find topics that might be discus this specific movie and thus providing us with useful movie information. We will restrict our topic searches to a subreddit called \textbf{/r/movies}; this section covers all kinds of news and discussions about movie, giving us more confidence that topics matching the search will actually cover a movie. Movie titles can be very generic and would give us topic matches that have nothing to do with the movie in question. We use the following query to find related topics.
+\\
+\\
+\textbf{Query:} \emph{subreddit:\textbf{movies} title:\textbf{'movietitle'}}
+
+\subsubsection{Crawling comments}
+For every matching topic we use the API to retrieve all the corresponding comments (including nested ones). This gives between 0 and 1000 comments for every movie in our database.
+
+\subsubsection{Mention extraction}
+For every movie with comments we run a mention extractor in order to find mentions of other movies or actors within these comments. \textbf{TODO: INCLUDE TECHNICALITIES}. Every mention that we find will be stored in an output file. For every line the output is formatted as
+\\
+\\
+\textbf{Format:} \textit{movie\textunderscore id},\textit{mention\textunderscore type},\textit{mention\textunderscore text}
+\\
+\\
+This output file contains all the exact correlations between movies (based on mentions) and is later on used to import into \textbf{Neo4j - TODO: REFERENCE}.
