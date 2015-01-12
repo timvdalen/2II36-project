@@ -1,0 +1,39 @@
+\subsection{Data}
+For the trakt data, we created a program that used the Trakt API to gather the IMDb IDs for each title.
+The program was online for three weeks. 
+In these three weeks it looked up the ID of more than 200.000 movies. 
+However for only 7255 movies the program found the ID.
+We then realised we could search each movie before the deadline and decided to find the ID's of the metacritic movie.
+After we found the ID's for these movies, we wanted to gather the comments for these movie with the same program.
+Unfortunately the API went offline and thus we were enable to gather the Trakt comments. \\
+
+IMDb generates plain text files with all content on their website.
+This plain text file were really hard to parse.
+The plain text file contained a lot of illegal characters and the structure of the file was not constitent. 
+IMDb also contains a lot of movies. 
+A lot of movies are not worth recommending to the users.
+Most movies in other languages than English are not fun for users to watch. \\
+
+We got all the user reviews of Metacritic. For most popular movies there were enough user reviews.
+For movies that are not very popular, there were not much user reviews.
+This means that for some movies we could not find mentions to other movies in the Metacritic data.
+
+\subsection{Mentions}
+To find mentions we searched for the exact title of movies. 
+This means we had some problems with the found mentions.
+We had a hard problem finding out if a mention was really, because they recommend that movie
+This occurs with movies with really short names for example: X, 9. 
+Or with movies names, that are also English words like: Yes, No, Take.
+It also happened with movies that are part of another movie. 
+When people in the user reviews of Batman refer to Man of Steel, they also mention the movie Steel.
+This happens for a lot of movies. 
+For example The Ring and Lord Of The Rings, Dragon and How to train your dragon. 
+Another problem that happend a lot was when there are movies with the same name of a popular actor.
+Peter Parker plays in Spider-man and is mentioned a lot in the user reviews. 
+There also is a movie Parker and now spider-man is linked to Parker.
+Perhaps we could solve this, by dleleting all mentions where an actor in that movie has the same name as the mentioned movie. \\
+
+Another problem with the mentions is that we do not know if they mention the movie in a positive way. 
+The user review could be very postive about the movie and say movie X is way better than this movie Y.
+This means that we would give a bad recommendation instead of a good one. 
+
