@@ -1,0 +1,26 @@
+\section{Future works}
+\subsection{TFIDF to enhance correlation results}
+Using a simple regex expression we search for mentions of movies in comments. 
+The results from this search are surprisingly accurate but also include quite some noise. 
+This is noise is the result of mentions of movie actors, characters and movie titles that are contained as a substring from other movie titles. 
+
+Examples:
+Search for “Lord of the Rings” has “The Ring” as a substring, which is also a actual movie, resulting a bad correlation (in this case that is). 
+Mentions about the movie “Spiderman” often include references to the protagonist “Peter Parker”. However “Parker” is also the name of a movie and therefore also results in a bad correlation.
+
+To enhance our results we could use TFIDF to differentiate between the importance of correlations. 
+Given a set of correlations: C = {“Lord of the Rings”, “The Ring”, “Pirates of the Carribean”} for movie M = “The Hobbit”
+We would look for movie titles contained in set C that are a substring of another movie in this set C OR a subset of the movie title M. 
+In this case: t1 = “The Ring” is a substring of t2 = “Lord of the Rings”
+We now calculating the total TFIDF score of both t1 and t2 for document set C(M): movie comments for movie M.
+We now compare the score of two movie titles and reason as follows:
+if TFIDF(t1) <= TFIDF(t2) one could say that both are almost equally “important” giving the score.
+But since t1 substring of t2, t2 is more discriminative than t1 and therefore giving a stronger correlation for movie M. 
+We can now remove t1 from the set of correlations C.
+
+
+
+
+
+
+

@@ -32,7 +32,15 @@ We extracted the user reviews from these pages by look for the css classes with 
 There was a little problem when user reviews where to long. These user reviews were three times in the page. One short version, two long versions. 
 We only needed the last long version. So in each class with  div.review body span, 
 we checked if it ended with expand… and if this was true we skipped that class and the next and only used the last class. 
+\subsubsection{Crawling issues}
+To deal with politness we crawled the metacritic pages single threaded. 
+We also crawled at most 3000 pages a day. 
+This meant we did not have to deal with scheduling the pages. 
+We just visited each url by alphabetical order. 
 
+We did have a small problem with redirecting url's . 
+The crawler could not handle those pages. 
+Thus we translated those url's to the real url's. 
 \subsection{trakt.tv}
 \label{sec:data:trakt}
 Trakt is a web service that lets people track what TV shows and movies they have watched.
@@ -70,13 +78,22 @@ Reddit offers an advanced \textbf{API} that allows for searching. This includes 
 \textbf{Query:} \emph{subreddit:\textbf{movies} title:\textbf{'movietitle'}}
 
 \subsubsection{Crawling comments}
-For every matching topic we use the API to retrieve all the corresponding comments (including nested ones). This gives between 0 and 1000 comments for every movie in our database.
+For every matching topic we use the API to retrieve all the corresponding comments (including nested ones). 
+This gives between 0 and 1000 comments for every movie in our database.
 
-\subsubsection{Mention extraction}
-For every movie with comments we run a mention extractor in order to find mentions of other movies or actors within these comments. \textbf{TODO: INCLUDE TECHNICALITIES}. Every mention that we find will be stored in an output file. For every line the output is formatted as
-\\
-\\
-\textbf{Format:} \textit{movie\textunderscore id},\textit{mention\textunderscore type},\textit{mention\textunderscore text}
-\\
-\\
-This output file contains all the exact correlations between movies (based on mentions) and is later on used to import into \textbf{Neo4j - TODO: REFERENCE}.
+\subsection{Mention extraction}
+For every movie with comments we run a mention extractor in order to find mentions of other movies or actors within these comments.
+We first combine all comments to one large comment for that movie. 
+After that we scan each comment for each movie title and count the number of times it is mentioned.
+When then know for each movie how often other movies are mentioned.
+These are stored as relationships between movies.
+We gave those relationships two properties. 
+The type of the relationship, which is mentions for all relationships and the weight, which is the number of times the movie is mentioned.
+
+We have chosen not to run a sentiment analysis on these comments. 
+We do not know if the comment is negative about the movie or about the mention.
+Suppose we have two sentences from comments on movie A: 
+1. If you enjoyed this movie you should watch movie B which is really good. 
+2. This movie was really good, way better than movie B.
+Sentence one is positive and the mention is positive too, but sentence two was positive too, but the mention is negative. 
+Because we do not know if the mentions are positive or negative by a simple sentiment analysis we decided to ignore sentiment. 
