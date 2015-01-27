@@ -37,3 +37,29 @@ Another problem with the mentions is that we do not know if they mention the mov
 The user review could be very postive about the movie and say movie X is way better than this movie Y.
 This means that we would give a bad recommendation instead of a good one. 
 
+\subsection{PathSim}
+Using the IMDb data and the “mentions” data that was mined, we can construct a graph. This
+graph can be used to find recommendations, but to find these recommendations we need to have
+a measure of similarity between nodes.
+
+The similarity measure that is currently used to generate the view on our website is purely based
+on mentions; given a node, we can give a list of other nodes based on the mentions relations. If
+there are only a few mentioned nodes, we can use mentions-of-mentions to expand the result, but
+this is often not necessary.
+
+Another similarity measure that is more similar to PathSim is used in the command-line tool that
+was demoed but which is not available online. In that second variant a query is run which given two
+nodes, outputs movies of actors that played in both given movie nodes. To put this in PathSim
+terms, we define a meta-path movie-actor-movie to define movie similarity.
+
+With PathSim, however, you count the number of paths between nodes X and Y following a certain
+meta-path. Instead, we we take one path following the meta-path between two given nodes and
+find movies that that actor played in (meta-path actor-movie).
+
+An alternative variant that we could not test because it was too computationally expensive used the
+meta-path movie-actor-movie-actor-movie, where the two “outer movies” are user-determined and
+we try to find all paths that match the meta path. This query turned out to be too expensive for
+Neo4j, and our currently query-pipeline can only support queries running within interactive
+timescales. To run queries of this scale, we would need an infrastructure that runs long-term jobs
+and can store the result in a cache-like database where it can be used by the front-end. This would
+be an area of future work.
