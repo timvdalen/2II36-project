@@ -9,7 +9,7 @@ Search for “Lord of the Rings” has “The Ring” as a substring, which is a
 Mentions about the movie “Spiderman” often include references to the protagonist “Peter Parker”. However “Parker” is also the name of a movie and therefore also results in a bad correlation.
 
 To enhance our results we could use TFIDF to differentiate between the importance of correlations. 
-Given a set of correlations: C = {“Lord of the Rings”, “The Ring”, “Pirates of the Carribean”} for movie M = “The Hobbit”
+Given a set of correlations: C = \{“Lord of the Rings”, “The Ring”, “Pirates of the Carribean”\} for movie M = “The Hobbit”
 We would look for movie titles contained in set C that are a substring of another movie in this set C OR a subset of the movie title M. 
 In this case: t1 = “The Ring” is a substring of t2 = “Lord of the Rings”
 We now calculating the total TFIDF score of both t1 and t2 for document set C(M): movie comments for movie M.
@@ -18,9 +18,19 @@ if TFIDF(t1) <= TFIDF(t2) one could say that both are almost equally “importan
 But since t1 substring of t2, t2 is more discriminative than t1 and therefore giving a stronger correlation for movie M. 
 We can now remove t1 from the set of correlations C.
 
+\subsection{Gathering user data}
+One source of data we are currently not utilizing is user data.
+We can leverage data about the way people use the application to give feedback to the recommender.
 
+There are several ways of gathering this data.
+The most important one is implicit feedback from the user.
+When a user clicks a link to the IMDb page of a movie, we can assume that they think that the suggestion was good.
+We can store this feedback to give the suggestion increased weight in the graph.
+In the same way, we can track users that explore the graph using the arrows next to the results.
+When a user selects a movie in this way, we can assume that the user saw this movie and agrees with the suggestion.
 
+Another way to collect this data is to just explicitly ask for it.
+When we give suggestions, we can allow users to 'rate' the suggestion and store this.
+This is obviously way more intrusive and less user friendly (as one of the main powers behind the current frontend is the clean and succinct interface), but it can also provide much more direct results.
 
-
-
-
+By combining these extra data sources, we can use 'the wisdom of the crowd' to refine the recommender quality.
